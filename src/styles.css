@@ -1,0 +1,201 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Instrument Serif", serif;
+  --font-body: "Inter", sans-serif;
+  color: #6d4b3b;
+  background: #fff8e8;
+  font-synthesis-weight: none;
+  text-rendering: geometricPrecision;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at 10% 12%, rgba(247, 203, 212, 0.42), transparent 24rem),
+    radial-gradient(circle at 88% 4%, rgba(207, 232, 247, 0.52), transparent 22rem),
+    linear-gradient(180deg, #fff8e8 0%, #fff3df 45%, #f9e5e7 100%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+h2 {
+  font-size: clamp(3rem, 8vw, 5.8rem);
+  line-height: 0.92;
+}
+
+button,
+a,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.section-kicker {
+  margin-bottom: 0.75rem;
+  color: rgba(109, 75, 59, 0.58);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.18);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: none;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    0 8px 30px rgba(120, 80, 50, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.65) 0%,
+    rgba(255, 255, 255, 0.25) 20%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.25) 80%,
+    rgba(255, 255, 255, 0.65) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-rise {
+  animation: fade-rise 0.8s ease-out both;
+}
+
+.animate-fade-rise-delay {
+  animation: fade-rise 0.8s ease-out 0.2s both;
+}
+
+.animate-fade-rise-delay-2 {
+  animation: fade-rise 0.8s ease-out 0.4s both;
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.float-soft {
+  animation: float-soft 3.8s ease-in-out infinite;
+}
+
+.storybook-band {
+  position: relative;
+  background:
+    linear-gradient(90deg, rgba(255, 233, 168, 0.45), rgba(247, 203, 212, 0.34)),
+    #fff8e8;
+}
+
+.storybook-band::before,
+.storybook-band::after {
+  content: "✿  ♥  ✿  ♥  ✿";
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  color: rgba(109, 75, 59, 0.25);
+  font-size: 1rem;
+  letter-spacing: 0.8rem;
+  white-space: nowrap;
+}
+
+.storybook-band::before {
+  top: 1.2rem;
+}
+
+.storybook-band::after {
+  bottom: 1.2rem;
+}
+
+.mobile-cta {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #6d4b3b;
+  font-size: 0.78rem;
+  font-weight: 500;
+  box-shadow: 0 8px 26px rgba(120, 80, 50, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
