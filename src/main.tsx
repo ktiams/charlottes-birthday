@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
-import AdminDashboard from "./components/AdminDashboard";
+import AdminRoute from "./components/AdminRoute";
 import RSVPConfirmation from "./components/RSVPConfirmation";
 import "./styles.css";
 
@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/confirmation" element={<RSVPConfirmation />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminRoute />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

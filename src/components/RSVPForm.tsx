@@ -26,10 +26,13 @@ export default function RSVPForm() {
   const navigate = useNavigate();
   const [form, setForm] = useState<FormState>(initialState);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [submitError, setSubmitError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const update = (key: keyof FormState, value: string) => {
     setForm((current) => ({ ...current, [key]: value }));
     setErrors((current) => ({ ...current, [key]: undefined }));
+    setSubmitError("");
   };
 
   const validate = () => {
@@ -44,29 +47,36 @@ export default function RSVPForm() {
     return nextErrors;
   };
 
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     const nextErrors = validate();
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
 
-    saveRsvp({
-      id: crypto.randomUUID(),
-      name: form.name.trim(),
-      phone: form.phone.trim(),
-      email: form.email.trim(),
-      guestCount: form.attendance === "attending" ? Number(form.guestCount) : 0,
-      attendance: form.attendance as AttendanceStatus,
-      createdAt: new Date().toISOString(),
-    });
+    setIsSubmitting(true);
+    setSubmitError("");
 
-    setForm(initialState);
-    navigate("/confirmation", {
-      state: {
+    try {
+      await saveRsvp({
         name: form.name.trim(),
-        attendance: form.attendance,
-      },
-    });
+        phone: form.phone.trim(),
+        email: form.email.trim(),
+        guestCount: form.attendance === "attending" ? Number(form.guestCount) : 0,
+        attendance: form.attendance as AttendanceStatus,
+      });
+
+      setForm(initialState);
+      navigate("/confirmation", {
+        state: {
+          name: form.name.trim(),
+          attendance: form.attendance,
+        },
+      });
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Unable to submit your RSVP. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -125,9 +135,14 @@ export default function RSVPForm() {
               </div>
               {errors.attendance && <p className="mt-2 text-sm text-[#9f3f4d]">{errors.attendance}</p>}
             </div>
-            <Button type="submit" size="lg" className="w-full">
-              Submit RSVP
+            <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit RSVP"}
             </Button>
+            {submitError && (
+              <div className="rounded-2xl bg-blush/45 px-4 py-3 text-sm font-medium text-[#9f3f4d]">
+                {submitError}
+              </div>
+            )}
           </form>
         </Card>
       </div>
